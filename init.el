@@ -68,7 +68,7 @@
 (menu-bar-mode -1)            ; Disable the menu bar
 
 ;; Set up the visible bell
-(setq visible-bell nil)
+(setq visible-bell t)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -474,7 +474,9 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook (lsp-mode . efs/lsp-mode-setup)
+  :ghook 
+  (#'efs/lsp-mode-setup)
+  ('python-mode-hook)
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
@@ -515,36 +517,9 @@
   :config
   (setq typescript-indent-level 2))
 
-;; (use-package python-mode
-        ;;   :ensure t
-        ;;   :hook (python-mode . lsp-deferred)
-        ;;   :custom
-        ;;   ;; NOTE: Set these if Python 3 is called "python3" on your system!
-        ;;   (python-shell-interpreter "python3")
-        ;;   (dap-python-executable "python3")
-        ;;   (dap-python-debugger 'debugpy)
-        ;;   :config
-        ;;   (require 'dap-python))
-
-    (use-package lsp-python-ms
-      :ensure t
-      :init
-      (setq lsp-python-ms-auto-install-server t)
-      (setq lsp-python-ms-executable "~/code/ms/python-language-server/output/bin/Release/osx-x64/publish/Microsoft.Python.LanguageServer")
-      :hook (python-mode . (lambda ()
-                              (require 'lsp-python-ms)
-                              (lsp-deferred)))  ; or lsp-deferred
-      :custom
-      ;; (python-shell-interpreter "python3")
-      ;; (dap-python-executable "python3")
-      (dap-python-debugger 'debugpy)
-      :config
-      (require 'dap-python))
-
-;;    (use-package eglot
-  ;;    :commands eglot)
-
-  ;; (add-hook 'python-mode-hook 'eglot-ensure)
+(use-package eglot
+  :ghook
+  ('python-mode-hook #'eglot-ensure))
 
 (use-package pyvenv
   :after python-mode
