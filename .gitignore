@@ -1,0 +1,14 @@
+elpa/*
+.last-package-update-day
+OrgFiles/
+Desktop.org
+exwm/
+history
+init-full.el
+places
+projectile-bookmarks.eld
+recentf
+run-emacs.sh
+show-notes/
+stream-tweaks.el
+var/
